@@ -108,3 +108,31 @@ class NetboxClient(api):
             termination_z_id = circuit.termination_z.id
 
         return termination_a_id, termination_z_id
+
+    def create_device_bulk(self, serials: typing.List, device_type: typing.List):
+
+        keys = ['serial', 'device_type']
+
+        devices = [dict(zip(keys, l)) for l in zip(serials, device_type)]
+
+        data = []
+
+        for device in devices:
+
+            dict = {
+                'device_role': 26,
+                'device_type': device['device_type'],
+                'serial': device['serial'],
+                'site': 118,
+                'rack': 424,
+                'custom_fields': {'Odoo Device ID': 'Missing'}
+            }
+
+            data.append(dict)
+
+        new_devices = self.dcim.devices.create(data)
+
+        for new_device in new_devices:
+            print(new_device.url)
+
+        return new_devices

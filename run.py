@@ -33,8 +33,8 @@ load_dotenv()
 DIR = os.path.dirname(os.path.realpath(__file__)) + '/'
 API_TOKEN = os.getenv('API_TOKEN')
 URL = os.getenv('URL')
-CSV = DIR + 'data/' + 'dev_to_pp.csv'
-# CSV = DIR + 'data/' + 'back_to_back.csv'
+# CSV = DIR + 'data/' + 'dev_to_pp.csv'
+CSV = DIR + 'data/' + 'back_to_back.csv'
 
 
 if __name__ == '__main__':
@@ -70,6 +70,11 @@ if __name__ == '__main__':
             row.set_termination_a_id(termination_a_id)
 
             cable = nb.create_cable(row)
+
+            if cable is None:
+                results.append((row.cid, row.circuit_url, False))
+                continue
+
             row.set_cable_id = cable.id
 
             results.append((row.cid, row.circuit_url, True))
@@ -80,8 +85,6 @@ if __name__ == '__main__':
 
             cable = nb.create_cable(row)
             if cable is None:
-                # logger.warning(
-                #     f"Something went wrong while creating this cable. Skipping to next row...")
                 results.append((cable, row.a_end, False))
                 continue
             row.cable_id = cable.id

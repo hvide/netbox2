@@ -171,12 +171,6 @@ class CircuitTermination:
 class BackToBack:
     def __init__(self, nb, data: typing.Dict) -> BackToBack:
 
-        # self.device_a = data['device_a']
-        # self.port_a = data['port_a']
-        # self.port_a_type = data['port_a_type']
-        # self.device_b = data['device_b']
-        # self.port_b = data['port_b']
-        # self.port_b_type = data['port_b_type']
         self.cable_type = 'smf'
         self.cable_status = 'connected'
         self.cable_color = 'ffeb3b'
